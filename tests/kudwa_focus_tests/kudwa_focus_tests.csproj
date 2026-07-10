@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>kudwa_focus_tests</AssemblyName>
+    <RootNamespace>kudwa_focus_tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/kudwa_focus/timer_preset.cs" Link="timer_preset.cs" />
+    <Compile Include="../../src/kudwa_focus/timer_catalog.cs" Link="timer_catalog.cs" />
+    <Compile Include="../../src/kudwa_focus/timer_math.cs" Link="timer_math.cs" />
+  </ItemGroup>
+</Project>

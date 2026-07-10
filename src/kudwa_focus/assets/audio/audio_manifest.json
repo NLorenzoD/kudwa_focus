@@ -1,0 +1,26 @@
+{
+  "title": "KUDWA Focus original score",
+  "licensing": "Original generated audio; safe to redistribute with this project.",
+  "assets": [
+    {
+      "file": "gentle_break_loop.wav",
+      "purpose": "continuous gentle break-period loop",
+      "duration_seconds": 24.0,
+      "sample_rate": 22050,
+      "channels": 1,
+      "format": "pcm_s16le_wav",
+      "sha256": "3e642758a6681fe6adb2bcf8e0443b83662943ce344c34a6a026f07caca7d813",
+      "provenance": "original_procedural_score_generated_by_tools/generate_audio.py"
+    },
+    {
+      "file": "final_minute_crescendo.wav",
+      "purpose": "60-second tempo crescendo with cinematic final ten",
+      "duration_seconds": 60.0,
+      "sample_rate": 22050,
+      "channels": 1,
+      "format": "pcm_s16le_wav",
+      "sha256": "37c88382be1b6869b0016d98fc4ef96e20df7fb630eefcd32dedeb6b7e42f653",
+      "provenance": "original_procedural_score_generated_by_tools/generate_audio.py"
+    }
+  ]
+}
