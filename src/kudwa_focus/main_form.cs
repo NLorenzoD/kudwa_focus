@@ -31,7 +31,7 @@ public sealed class main_form : Form
     private Rectangle previous_bounds;
     private FormBorderStyle previous_border_style;
     private FormWindowState previous_window_state;
-    private double animation_phase;
+    private long last_displayed_second = -1;
 
     public main_form()
     {
@@ -43,6 +43,8 @@ public sealed class main_form : Form
         ForeColor = ivory_colour;
         Font = new Font("Segoe UI", 10F);
         KeyPreview = true;
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
+        apply_window_icon();
 
         stage = new stage_panel { Dock = DockStyle.Fill, Margin = new Padding(0) };
         activity_label = create_activity_label();
@@ -57,7 +59,7 @@ public sealed class main_form : Form
 
         build_interface();
 
-        interface_timer = new System.Windows.Forms.Timer { Interval = 50 };
+        interface_timer = new System.Windows.Forms.Timer { Interval = 100 };
         interface_timer.Tick += update_timer;
         interface_timer.Start();
 
@@ -526,12 +528,13 @@ public sealed class main_form : Form
 
     private void update_timer(object? sender, EventArgs event_args)
     {
-        animation_phase += interface_timer.Interval / 1_000.0;
+        var should_update_screen = false;
 
         if (engine.is_running && engine.remaining <= TimeSpan.Zero)
         {
             engine.complete();
             has_finished = true;
+            should_update_screen = true;
         }
         else if (engine.is_running)
         {
@@ -541,15 +544,22 @@ public sealed class main_form : Form
             {
                 audio.play_for(engine.remaining, effective_volume(), true);
             }
+
+            var displayed_second = (long)Math.Ceiling(engine.remaining.TotalSeconds);
+            should_update_screen = displayed_second != last_displayed_second;
         }
 
-        update_screen();
+        if (should_update_screen)
+        {
+            update_screen();
+        }
     }
 
     private void update_screen()
     {
         var remaining = engine.remaining;
         var display = current_display_phase(remaining);
+        last_displayed_second = (long)Math.Ceiling(remaining.TotalSeconds);
         activity_label.Text = engine.activity_name.ToUpperInvariant();
         timer_label.Text = has_finished ? "TIME!" : timer_math.format_remaining(remaining);
         start_button.Text = engine.is_running ? "PAUSE" : has_finished ? "RESTART" : "START";
@@ -571,8 +581,7 @@ public sealed class main_form : Form
 
         stage.update_visual(
             timer_math.progress(engine.total_duration, remaining),
-            display,
-            animation_phase * animation_speed(display));
+            display);
     }
 
     private display_phase current_display_phase(TimeSpan remaining)
@@ -598,16 +607,6 @@ public sealed class main_form : Form
         }
 
         return remaining < engine.total_duration ? display_phase.paused : display_phase.ready;
-    }
-
-    private static double animation_speed(display_phase phase)
-    {
-        return phase switch
-        {
-            display_phase.final_ten or display_phase.complete => 2.6,
-            display_phase.final_minute => 1.1,
-            _ => 0.22
-        };
     }
 
     private void toggle_sound()
@@ -708,5 +707,18 @@ public sealed class main_form : Form
                 event_args.SuppressKeyPress = true;
                 break;
         }
+    }
+
+    private void apply_window_icon()
+    {
+        using var icon_stream = typeof(main_form).Assembly.GetManifestResourceStream("kudwa_focus.app_icon.ico");
+
+        if (icon_stream is null)
+        {
+            return;
+        }
+
+        using var source_icon = new Icon(icon_stream);
+        Icon = (Icon)source_icon.Clone();
     }
 }

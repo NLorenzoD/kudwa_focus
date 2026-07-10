@@ -1,0 +1,19 @@
+{
+  "title": "KUDWA Focus application icon",
+  "design": "Geometric K mark using the app's angular KUDWA-inspired visual language.",
+  "source": "tools/generate_icon.py",
+  "files": {
+    "kudwa_focus_icon.svg": "4365f9e0662d350ae03fffae2ff57301021d4cc19717d382909d99f95d1f0218",
+    "kudwa_focus_icon.png": "e938a31505b5c5b1ead81a9e47d0aba5ff8ffcdf9866b7bbb1f859f8ca9be258",
+    "kudwa_focus_icon.ico": "26fe5e04d6ce84c0257756214d7ae31c632f31a3aa95feaa81c308c64b9bb75f"
+  },
+  "ico_sizes": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    128,
+    256
+  ]
+}

@@ -23,7 +23,8 @@ The app is self-contained, so a separate .NET installation is not required. Beca
 
 ## The experience
 
-- A projector-scale countdown with sharp KUDWA-inspired angular motion.
+- A projector-scale countdown with sharp KUDWA-inspired angular design.
+- A stable, accessibility-safe display with no flashing, pulsing or moving background.
 - Gentle original music throughout the break.
 - An automatically intensifying final-minute score.
 - A ten-impact countdown and large cinematic finish.
@@ -52,6 +53,14 @@ Regenerate them with:
 python3 tools/generate_audio.py
 ```
 
+## Application icon
+
+The geometric KUDWA Focus icon is stored as an editable SVG, a preview PNG and a multi-size Windows ICO under [`src/kudwa_focus/assets/icon`](src/kudwa_focus/assets/icon). Regenerate all icon formats with:
+
+```bash
+python3 tools/generate_icon.py
+```
+
 ## Build locally
 
 Requirements: Windows 10 or 11 and the .NET 10 SDK.
@@ -73,5 +82,5 @@ kudwa_focus/
 ├── .github/workflows/        Windows build, smoke test and release
 ├── src/kudwa_focus/          WinForms application and embedded audio
 ├── tests/kudwa_focus_tests/  Automated timing and preset checks
-└── tools/                    Reproducible original-audio generator
+└── tools/                    Reproducible audio and icon generators
 ```

@@ -9,7 +9,6 @@ internal sealed class stage_panel : Panel
     private readonly Color amber_colour = Color.FromArgb(255, 184, 0);
     private readonly Color red_colour = Color.FromArgb(255, 45, 45);
     private double progress_value;
-    private double animation_phase;
     private display_phase current_phase = display_phase.ready;
 
     public stage_panel()
@@ -19,11 +18,17 @@ internal sealed class stage_panel : Panel
         BackColor = deep_colour;
     }
 
-    public void update_visual(double progress, display_phase phase, double animation)
+    public void update_visual(double progress, display_phase phase)
     {
-        progress_value = Math.Clamp(progress, 0.0, 1.0);
+        var next_progress = Math.Clamp(progress, 0.0, 1.0);
+
+        if (Math.Abs(progress_value - next_progress) < 0.0001 && current_phase == phase)
+        {
+            return;
+        }
+
+        progress_value = next_progress;
         current_phase = phase;
-        animation_phase = animation;
         Invalidate();
     }
 
@@ -42,16 +47,8 @@ internal sealed class stage_panel : Panel
         };
 
         draw_angular_blocks(graphics, accent);
-        draw_motion_lines(graphics, accent);
+        draw_structure_lines(graphics, accent);
         draw_progress(graphics, accent);
-
-        if (current_phase is display_phase.final_ten or display_phase.complete)
-        {
-            var pulse = 0.5 + 0.5 * Math.Sin(animation_phase * Math.Tau);
-            var alpha = 42 + (int)(pulse * 60);
-            using var pulse_pen = new Pen(Color.FromArgb(alpha, red_colour), 10F);
-            graphics.DrawRectangle(pulse_pen, 5, 5, Math.Max(0, Width - 11), Math.Max(0, Height - 11));
-        }
     }
 
     private void draw_angular_blocks(Graphics graphics, Color accent)
@@ -86,12 +83,11 @@ internal sealed class stage_panel : Panel
         graphics.ResetTransform();
     }
 
-    private void draw_motion_lines(Graphics graphics, Color accent)
+    private void draw_structure_lines(Graphics graphics, Color accent)
     {
-        using var line_pen = new Pen(Color.FromArgb(32, accent), 2F);
-        var shift = (int)(animation_phase * 48.0) % 48;
+        using var line_pen = new Pen(Color.FromArgb(22, accent), 2F);
 
-        for (var x = -Height + shift; x < Width; x += 48)
+        for (var x = -Height; x < Width; x += 64)
         {
             graphics.DrawLine(line_pen, x, Height, x + Height, 0);
         }

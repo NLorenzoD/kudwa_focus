@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="KUDWA Focus geometric K icon">
+  <defs>
+    <clipPath id="icon-shape"><rect width="256" height="256" rx="42"/></clipPath>
+    <pattern id="diagonals" width="54" height="54" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <rect width="5" height="54" fill="#ff5b1f" opacity="0.11"/>
+    </pattern>
+  </defs>
+  <g clip-path="url(#icon-shape)">
+    <rect width="256" height="256" fill="#0e1110"/>
+    <rect width="256" height="256" fill="url(#diagonals)"/>
+    <rect x="21.25" y="21.25" width="213.5" height="213.5" fill="none" stroke="#1c221f" stroke-width="2.5"/>
+    <path d="M52 48H91V208H52Z" fill="#f6f1e5"/>
+    <path d="M88 118L158 48H210L130 130Z" fill="#ff5b1f"/>
+    <path d="M88 136L132 126L210 208H158Z" fill="#ffb800"/>
+    <path d="M111 128L128 111L145 128L128 145Z" fill="#ff2d2d"/>
+  </g>
+</svg>

@@ -29,6 +29,9 @@ jobs:
       - name: restore
         run: dotnet restore src/kudwa_focus/kudwa_focus.csproj
 
+      - name: verify_accessibility_guard
+        run: python tests/accessibility_guard.py
+
       - name: run_checks
         run: dotnet run --project tests/kudwa_focus_tests/kudwa_focus_tests.csproj --configuration Release
 
